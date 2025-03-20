@@ -1,0 +1,17 @@
+**/build
+
+**/release
+
+**/debug
+
+**/log.*
+
+**/.vscode
+
+**/*.exe
+
+**/*.o
+
+**/*.so
+
+**/*.a
