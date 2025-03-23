@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,6 +37,8 @@
 #define SOCKET int
 #define GETSOCKETERRNO() (errno)
 #endif
+
+void* SpeakWithClient(void*);
 
 int main() {
     #if defined(_WIN32)
@@ -85,31 +88,47 @@ int main() {
         return 1;
     }
 
-    printf("Waiting for connection...\n");
-    struct sockaddr_storage client_address; // stores info about connecting client
-    socklen_t client_len = sizeof(client_address);
-    SOCKET socket_client = accept(socket_listen,
-                            (struct sockaddr*) &client_address, &client_len);
-    if (!ISVALIDSOCKET(socket_client)) {
-        fprintf(stderr, "accept() failed. (%d)\n", GETSOCKETERRNO());
-        return 1;
-    }
-    FILE* log_file;
-    if (!(log_file = fopen("./log.txt", "a"))) {
-        printf("fopen file for logging connections failed\n");
-    } else {
-        /* logging a client address to the log.txt: */
-        char address_buffer[100];
-        getnameinfo((struct sockaddr*)&client_address, client_len, address_buffer, 
-                    sizeof(address_buffer), 0, 0, NI_NUMERICHOST);
-        fprintf(log_file, "%s\n", address_buffer);
-        fclose(log_file);
-    }
+    while(1) {
+        struct sockaddr_storage client_address;
+        socklen_t client_len = sizeof(client_address);
+        SOCKET socket_client = accept(socket_listen, // 1. Ждём клиента
+                                (struct sockaddr*) &client_address, &client_len);
+        if (!ISVALIDSOCKET(socket_client)) {
+            fprintf(stderr, "accept() failed. (%d)\n", GETSOCKETERRNO());
+            return 1;
+        }
+        SOCKET* client_socket = malloc(sizeof(SOCKET)); 
+        *client_socket = socket_client;
 
+        pthread_t thread;
+        pthread_create(&thread, NULL, SpeakWithClient, client_socket); // 2. Запускаем поток
+        pthread_detach(thread); // 3. Поток сам себя очистит, вместо pthread_join, который 
+    }
+    printf("Closing listening socket...\n");
+    CLOSESOCKET(socket_listen);
+
+
+    #if defined(_WIN32) 
+        WSACleanup(); // clean up Winsock
+    #endif
+    return 0;
+}
+
+void* SpeakWithClient(void* sc) {
+    SOCKET socket_client = *(SOCKET*)sc; // сучий reinterpret_cast
     printf("Reading message...\n");
     char message[1024];
     int bytes_received = recv(socket_client, message, 1024, 0);
-    printf("Received %d chars. message: %.*s", bytes_received, bytes_received, message);
+    printf("Received %d bytes. message: %.*s", bytes_received, bytes_received, message);
+    if (bytes_received == 0) {
+        printf("Client closed the connection \n");
+        CLOSESOCKET(socket_client);
+        return NULL;
+    } else if (bytes_received < 0) {
+        fprintf(stderr, "recv() error (%d)", GETSOCKETERRNO());
+        CLOSESOCKET(socket_client);
+        return NULL;
+    }
 
     printf("Sending status...\n");
     const char *status =
@@ -123,13 +142,6 @@ int main() {
 
     printf("Closing connection...\n");
     CLOSESOCKET(socket_client);
-
-    printf("Closing listening socket...\n");
-    CLOSESOCKET(socket_listen);
-
-
-    #if defined(_WIN32) // for windows, to clean up Winsock
-        WSACleanup();
-    #endif
-    return 0;
+    free(sc);
+    return NULL;
 }
