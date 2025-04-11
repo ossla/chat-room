@@ -41,7 +41,7 @@ public:
     }
 
     inline void ShowMainPart(char input_buff[]) {
-        ImVec2 size(200, 300);
+        ImVec2 size(500, 700);
         ImGui::SetNextWindowSize(size);
         {
             ImGui::Begin("chat-room");
