@@ -120,10 +120,35 @@ chmod +x build.sh
 
 ### Windows
 
-* Скачать и установить `MingW` (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download)
+> *В примерах используется PowerShell*
+
+* Скачать и установить `MingW` (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download), пакет g++
+  
 * Скачать и установить `cmake` (https://cmake.org/download/)
 ![2025-04-13-02:00:04-screenshot](https://github.com/user-attachments/assets/325a3cd2-409f-46e9-bcce-1ba70796bfbe)
+
 * Скачать и установить git - необходим для библиотек с FetchContent cmake’а (официальный сайт Git: https://git-scm.com/downloads/win)
+
+* Проверить установленные библиотеки вы можете, выполник команды:
+
+  ```sh
+  git --version
+  cmake --version
+  g++ --version
+  ```
+  
+* Загрузить папку проекта (через `git clone` или ZIP архив)
+![2025-04-13-02:17:51-screenshot](https://github.com/user-attachments/assets/f9661ef4-08a1-496b-964c-04f3b76fe532)
+
+* Переместиться в папку проекта из консоли, выполнить команды:
+
+`chat-room/client` & `chat-room/server` (в каждой из папок проекта выполнить команды ниже)
+```sh
+cmake -B build -S .
+cmake --build build
+```
+
+* CMake создаст исполняемые файлы в папках `<app>/build/Debug/<app>.exe` (где <app> - клиент или сервер)
 
 <hr>
 
