@@ -18,7 +18,7 @@ void ChatServer::InitializeServerSocket() {
     raw_address.ai_flags = AI_PASSIVE;
     log_os_ << "Configuring local address...\n"sv;
     struct addrinfo* bind_address;
-    if (getaddrinfo(0, "8080", &raw_address, &bind_address)) {
+    if (getaddrinfo(0, PORT, &raw_address, &bind_address)) {
         throw SocketException("getaddrinfo() err. Code: " + STRING_SOCKET_ERRNO());
     }
 

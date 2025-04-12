@@ -37,6 +37,8 @@
 #define GETSOCKETERRNO() (errno)
 #endif
 
+const char PORT[] = "8080";
+
 int main() {
     #if defined(_WIN32)
     WSADATA d;
@@ -57,7 +59,7 @@ int main() {
     raw_addrinfo.ai_socktype = SOCK_STREAM; // TCP          (SOCK_DGRAM для UDP)
     
     struct addrinfo* bind_addr;
-    int result = getaddrinfo(0, "8080", &raw_addrinfo, &bind_addr);
+    int result = getaddrinfo(0, PORT, &raw_addrinfo, &bind_addr);
     if (result != 0) {
         fprintf(stderr, "getaddrinfo() failed: %s\n", gai_strerror(result));
         return 1;

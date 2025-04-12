@@ -11,7 +11,17 @@
 #include <charconv>
 
 
+
 class ChatServer {
+private:
+    inline static const char PORT[] = "8080";
+    std::ostream& log_os_;
+
+    SOCKET listen_socket_ = -1;
+    std::deque<std::string>             addresses_;
+    std::unordered_map<SOCKET
+        , std::unique_ptr<std::string>> connections_; /* stores SOCKET and ptr to the string with its address */
+
 public:
     ChatServer() = delete;
     ChatServer(ChatServer&&) = delete;
@@ -22,13 +32,6 @@ public:
 
     void HandleConnections();
 
-private:
-    std::ostream& log_os_;
-
-    SOCKET listen_socket_ = -1;
-    std::deque<std::string>             addresses_;
-    std::unordered_map<SOCKET
-        , std::unique_ptr<std::string>> connections_; /* stores SOCKET and ptr to the string with its address */
 
 private:
     void InitializeServerSocket();
