@@ -45,6 +45,8 @@ private:
 
 <hr>
 
+<br>
+
 ## Исполнение
 
 ```sh
@@ -58,6 +60,8 @@ private:
 ```
 
 <hr>
+
+<br>
 
 ## Быстрая установка
 
@@ -80,6 +84,8 @@ chmod +x <file>
 * Запускать исполняемый файл от имени администратора
 
 <hr>
+
+<br>
 
 ## Ручная компиляция
 
@@ -110,6 +116,8 @@ chmod +x build.sh
 ./client <host> <port>
 ```
 
+<br>
+
 ### Windows
 
 * Скачать и установить `MingW` (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download)
@@ -119,9 +127,12 @@ chmod +x build.sh
 
 <hr>
 
-## `chat-room/legacy`
+<br>
 
-в папке legacy расположена упрощённая версия приложения, написанная на Си,
-компилируется стандартным образом `gcc server.c` или `gcc client.c`
+## legacy папка
+
+в папке legacy расположена упрощённая версия приложения, написанная на Си.
+
+Компилируется стандартным образом `gcc server.c` или `gcc client.c`
 
 в этой версии клиент реализован через `select()`, поэтому при написании сообщения собеседнику блокируется поток, слушающий сервер (отсутствие многопоточности).
