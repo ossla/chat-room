@@ -8,8 +8,27 @@
 
 На одном из компьютеров запускается сервер - `chat-room/server` (базовая версия) или `chat-room/legacy/c-server`, затем приложения-клиенты подключаются к нему через ip-адрес (**loopback**, по-умолчанию **IPv4**) и порт (по-умолчанию **8080**)
 
+<br>
 
-*Порт* можно изменить в `chat-room/server/server.cpp`
+> Для передачи сообщений вне локальной сети необходимо узнать внешний ip адрес сервера
+> (например, через https://www.whatismyip.com/) и пробросить порт в настройках роутера
+>
+> Для того, чтобы проверить возможность подключения к порту (после запуска сервера)
+> Можно использовать сервис типа:
+>
+>     https://canyouseeme.org
+>
+>     https://portchecker.co
+> 
+> Если пробросить порт не получается, можно воспользоваться сторонними сервисами, открывающими соединение:
+>
+>     ngrok — создает туннель до машины и даёт внешний IP + порт.
+>
+>     FRP, ZeroTier, Tailscale — решения для организации сети.
+
+<br>
+
+*Порт* сервера можно изменить в `chat-room/server/server.cpp`
 ```cpp
 class ChatServer {
 private:
@@ -93,8 +112,10 @@ chmod +x build.sh
 
 ### Windows
 
-* Скачать и установить `MingW` (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download) 
+* Скачать и установить `MingW` (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download)
 * Скачать и установить `cmake` (https://cmake.org/download/)
+![2025-04-13-02:00:04-screenshot](https://github.com/user-attachments/assets/325a3cd2-409f-46e9-bcce-1ba70796bfbe)
+* Скачать и установить git - необходим для библиотек с FetchContent cmake’а (официальный сайт Git: https://git-scm.com/downloads/win)
 
 <hr>
 
