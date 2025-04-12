@@ -71,7 +71,7 @@ private:
             WSADATA d;
             if (WSAStartup(MAKEWORD(2, 2), &d)) {
                 fprintf(stderr, "Failed to initialize.\n");
-                return 1;
+                throw SocketException("Winsocklib Initialize failed");
             }
     #endif
     }
