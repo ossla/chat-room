@@ -179,6 +179,5 @@ void RenderUI(std::shared_ptr<ChatClient> client) {
 
     glfwDestroyWindow(window);
     glfwTerminate();
-
 }
 } // namespace UI
