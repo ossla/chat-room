@@ -1,5 +1,4 @@
-# Messanger C++ Application
-
+# Chat-room c++ application / messenger
 <hr>
 
 ## Client & Server
