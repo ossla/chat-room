@@ -128,7 +128,7 @@ chmod +x build.sh
 
 * Скачать и установить git - необходим для библиотек с FetchContent cmake’а (официальный сайт Git: https://git-scm.com/downloads/win)
 
-* Проверить установленные библиотеки вы можете, выполник команды:
+* Проверить установленные библиотеки вы можете, выполнив команды:
 
   ```sh
   git --version
@@ -147,7 +147,7 @@ cmake -B build -S .
 cmake --build build
 ```
 
-* CMake создаст исполняемые файлы в папках `<app>/build/Debug/<app>.exe` (где <app> - клиент или сервер)
+* CMake создаст исполняемые файлы в папках `app/build/Debug/app.exe` (где "app" - клиент или сервер)
 
 <hr>
 
