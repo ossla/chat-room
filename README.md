@@ -9,59 +9,6 @@
 
 <br>
 
-> Для передачи сообщений вне локальной сети необходимо узнать внешний ip адрес сервера
-> (например, через https://www.whatismyip.com/) и пробросить порт в настройках роутера
->
-> Для того, чтобы проверить возможность подключения к порту (после запуска сервера)
-> Можно использовать сервис типа:
->
->     https://canyouseeme.org
->
->     https://portchecker.co
-> 
-> Если пробросить порт не получается, можно воспользоваться сторонними сервисами, открывающими соединение:
->
->     ngrok — создает туннель до машины и даёт внешний IP + порт.
->
->     FRP, ZeroTier, Tailscale — решения для организации сети.
-
-<br>
-
-*Порт* сервера можно изменить в `chat-room/server/server.cpp`
-```cpp
-class ChatServer {
-private:
-    inline static const char PORT[] = "8080";
-
-```
-
-или в `chat-room/legacy/c-server/server.cpp`
-```c
-    const char PORT[] = "8080";
-
-    int main() {
-```
-
-<hr>
-
-<br>
-
-## Исполнение
-
-```sh
-./server     # Linux/MacOS
-./server.exe # Windows
-```
-
-```sh
-./client <host> <port>     # Linux/MacOS
-./client.exe <host> <port> # Windows
-```
-
-<hr>
-
-<br>
-
 ## Быстрая установка
 
 Вы можете быстро получить исполняемые файлы для вашей ОС из вкладки **"Release"**
@@ -160,3 +107,38 @@ cmake --build build
 Компилируется стандартным образом `gcc server.c` или `gcc client.c`
 
 в этой версии клиент реализован через `select()`, поэтому при написании сообщения собеседнику блокируется главный поток.
+
+<br>
+
+*Порт* сервера можно изменить в `chat-room/server/server.cpp`
+```cpp
+class ChatServer {
+private:
+    inline static const char PORT[] = "8080";
+
+```
+
+или в `chat-room/legacy/c-server/server.cpp`
+```c
+    const char PORT[] = "8080";
+
+    int main() {
+```
+
+<hr>
+
+<br>
+
+## Исполнение
+
+```sh
+./server     # Linux/MacOS
+./server.exe # Windows
+```
+
+```sh
+./client <host> <port>     # Linux/MacOS
+./client.exe <host> <port> # Windows
+```
+
+<hr>
